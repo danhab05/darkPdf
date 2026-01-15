@@ -359,8 +359,8 @@ export default function Home() {
 
         <footer className={styles.footer}>
           <p>
-            Traitement 100% local. Les PDF &gt; 30 Mo ou très longs passent en 600
-            dpi pour limiter la taille finale.
+            Traitement 100% local. Compression JPEG adaptative pour réduire
+            fortement la taille finale.
           </p>
         </footer>
       </main>
