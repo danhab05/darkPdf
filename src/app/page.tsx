@@ -254,38 +254,62 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.backdrop} />
+      <div className={styles.backdrop}>
+        <div className={styles.orb1}></div>
+        <div className={styles.orb2}></div>
+        <div className={styles.orb3}></div>
+        <div className={styles.orb4}></div>
+      </div>
+
       <main className={styles.main}>
         <header className={styles.hero}>
-          <div className={styles.heroBadge}>Liquid Glass PDF</div>
-          <h1>Transforme tes PDF en mode nuit premium.</h1>
-          <p>
-            DarkPdf recrée un PDF sombre ultra net. Le traitement se fait dans ton
-            navigateur, sans upload serveur.
+          <div className={styles.heroBadge}>
+            <span className={styles.badgeIcon}>✨</span>
+            DarkPDF
+          </div>
+          <h1 className={styles.heroTitle}>
+            Transforme tes PDFs en
+            <span className={styles.gradient}> mode sombre</span>
+          </h1>
+          <p className={styles.heroDescription}>
+            Conversion ultra-rapide et locale. Tes documents restent privés avec un rendu professionnel en haute qualité.
           </p>
-          <div className={styles.heroHighlights}>
-            <div className={styles.highlight}>Local & privé</div>
-            <div className={styles.highlight}>Qualité 600-900 dpi</div>
-            <div className={styles.highlight}>Multi‑pages support</div>
+          <div className={styles.heroStats}>
+            <div className={styles.stat}>
+              <div className={styles.statIcon}>🔒</div>
+              <span>100% Local</span>
+            </div>
+            <div className={styles.stat}>
+              <div className={styles.statIcon}>⚡</div>
+              <span>Ultra Rapide</span>
+            </div>
+            <div className={styles.stat}>
+              <div className={styles.statIcon}>🎨</div>
+              <span>900 DPI</span>
+            </div>
           </div>
         </header>
 
-        <section className={styles.glassPanel}>
-          <div className={styles.panelHeader}>
-            <div>
-              <h2>Dépose ton PDF</h2>
-              <p>On inverse chaque pixel pour un vrai dark mode.</p>
-            </div>
-            <div className={styles.panelMeta}>
-              <span>Qualité adaptative</span>
-              <span>600 / 900 dpi · JPEG adaptatif</span>
-            </div>
-          </div>
+        <section className={styles.card}>
+          <div className={styles.cardGlow}></div>
 
-          <div className={styles.uploadRow}>
-            <label className={styles.fileLabel}>
-              <span className={styles.fileTitle}>Glisser ou cliquer</span>
-              <span className={styles.fileHint}>PDF uniquement, traitement local.</span>
+          <div className={styles.uploadSection}>
+            <h2 className={styles.sectionTitle}>Importe ton PDF</h2>
+
+            <label className={styles.dropzone}>
+              <div className={styles.dropzoneContent}>
+                <div className={styles.uploadIcon}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div className={styles.dropzoneText}>
+                  <strong>Glisse ton PDF ici</strong>
+                  <span>ou clique pour parcourir</span>
+                </div>
+              </div>
               <input
                 className={styles.fileInput}
                 type="file"
@@ -293,79 +317,76 @@ export default function Home() {
                 onChange={handleFileChange}
               />
             </label>
-            <div className={styles.fileSummary}>
-              <div>
-                <span>Fichier</span>
-                <strong>{file ? file.name : "Aucun PDF sélectionné"}</strong>
+
+            {file && (
+              <div className={styles.fileInfo}>
+                <div className={styles.fileIcon}>📄</div>
+                <div className={styles.fileDetails}>
+                  <strong>{file.name}</strong>
+                  <span>{fileSizeLabel} • {selectedDpi ? `${selectedDpi} DPI` : 'DPI adaptatif'}</span>
+                </div>
               </div>
-              <div>
-                <span>Taille</span>
-                <strong>{file ? fileSizeLabel : "--"}</strong>
+            )}
+
+            <button
+              className={styles.convertButton}
+              onClick={processPdf}
+              disabled={!file || processingState === "rendering" || processingState === "loading" || processingState === "saving"}
+            >
+              <span className={styles.buttonText}>
+                {processingState === "rendering" || processingState === "loading" || processingState === "saving"
+                  ? "⚙️ Conversion en cours..."
+                  : "🚀 Convertir en mode sombre"}
+              </span>
+            </button>
+
+            {(processingState === "rendering" || processingState === "loading" || processingState === "saving") && (
+              <div className={styles.progress}>
+                <div className={styles.progressInfo}>
+                  <span className={styles.progressStatus}>{status}</span>
+                  <span className={styles.progressPercent}>{progress}%</span>
+                </div>
+                <div className={styles.progressBar}>
+                  <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+                </div>
               </div>
-              <div>
-                <span>DPI</span>
-                <strong>{selectedDpi ? `${selectedDpi} dpi` : "Adaptatif"}</strong>
+            )}
+
+            {error && (
+              <div className={styles.errorMessage}>
+                <span>⚠️ {error}</span>
               </div>
-            </div>
+            )}
+
+            {downloadUrl && (
+              <a className={styles.downloadButton} href={downloadUrl} download="pdf-dark-mode.pdf">
+                <span>⬇️ Télécharger le PDF transformé</span>
+              </a>
+            )}
           </div>
-
-          <button
-            className={styles.primaryButton}
-            onClick={processPdf}
-            disabled={!file || processingState === "rendering" || processingState === "loading" || processingState === "saving"}
-          >
-            {processingState === "rendering" ||
-            processingState === "loading" ||
-            processingState === "saving"
-              ? "Traitement en cours..."
-              : "Créer le PDF sombre"}
-          </button>
-
-          <div className={styles.progressWrapper}>
-            <div className={styles.progressHeader}>
-              <span>{status}</span>
-              <span>{progress}%</span>
-            </div>
-            <div className={styles.progressBar}>
-              <div
-                className={styles.progressFill}
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-          </div>
-
-          {error && <p className={styles.error}>{error}</p>}
-
-          {downloadUrl && (
-            <a className={styles.download} href={downloadUrl} download="pdf-dark-mode.pdf">
-              Télécharger le PDF inversé
-            </a>
-          )}
         </section>
 
-        <section className={styles.steps}>
-          <div className={styles.stepCard}>
-            <span>01</span>
-            <h3>Analyse locale</h3>
-            <p>Chargement sécurisé et qualité adaptative selon taille/pages.</p>
+        <section className={styles.features}>
+          <div className={styles.feature}>
+            <div className={styles.featureNumber}>01</div>
+            <h3>Analyse intelligente</h3>
+            <p>Détection automatique de la qualité optimale selon la taille et le nombre de pages.</p>
           </div>
-          <div className={styles.stepCard}>
-            <span>02</span>
-            <h3>Inversion pixel</h3>
-            <p>Chaque page est rendue puis inversée pour un vrai dark mode.</p>
+          <div className={styles.feature}>
+            <div className={styles.featureNumber}>02</div>
+            <h3>Inversion parfaite</h3>
+            <p>Chaque pixel est inversé avec précision pour un rendu sombre impeccable.</p>
           </div>
-          <div className={styles.stepCard}>
-            <span>03</span>
-            <h3>PDF final</h3>
-            <p>On reconstruit un nouveau PDF sombre prêt à télécharger.</p>
+          <div className={styles.feature}>
+            <div className={styles.featureNumber}>03</div>
+            <h3>Compression optimale</h3>
+            <p>Réduction de taille jusqu'à 50% tout en préservant la qualité visuelle.</p>
           </div>
         </section>
 
         <footer className={styles.footer}>
-          <p>
-            Traitement 100% local. Compression JPEG adaptative pour réduire
-            fortement la taille finale.
-          </p>
+          <p>Traitement 100% local • Aucune donnée envoyée au serveur</p>
+          <p className={styles.copyright}>© 2026 Habib Dan • Tous droits réservés</p>
         </footer>
       </main>
     </div>
