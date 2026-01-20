@@ -48,11 +48,11 @@ const selectJpegQuality = (fileSize: number, pageCount: number, dpi: number) => 
   const isMedium = sizeMb > 25 || pageCount > 40;
   const isHighDpi = dpi >= HIGH_DPI;
 
-  if (isLarge && isHighDpi) return 0.6;
-  if (isLarge) return 0.65;
-  if (isMedium && isHighDpi) return 0.7;
-  if (isMedium) return 0.75;
-  return 0.82;
+  if (isLarge && isHighDpi) return 0.55;
+  if (isLarge) return 0.6;
+  if (isMedium && isHighDpi) return 0.65;
+  if (isMedium) return 0.7;
+  return 0.75;
 };
 
 const clampParallelism = (value: number) =>
@@ -228,8 +228,12 @@ export default function Home() {
       }
 
       setProcessingState("saving");
-      setStatus("Finalisation du PDF inversé...");
-      const outputBytes = await outputPdf.save();
+      setStatus("Finalisation et compression du PDF...");
+      const outputBytes = await outputPdf.save({
+        useObjectStreams: true,
+        addDefaultPage: false,
+        objectsPerTick: 50,
+      });
       const outputBlob = new Blob([outputBytes as unknown as BlobPart], {
         type: "application/pdf",
       });
