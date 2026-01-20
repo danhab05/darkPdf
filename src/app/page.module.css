@@ -1,304 +1,586 @@
+/* ===== PAGE & LAYOUT ===== */
 .page {
   min-height: 100vh;
-  background: #f3f5ff;
-  color: #0b0e14;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: center;
-  padding: 48px 24px 96px;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.orb1, .orb2, .orb3, .orb4 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: float 20s ease-in-out infinite;
+}
+
+.orb1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 107, 107, 0.8) 0%, transparent 70%);
+  top: -10%;
+  left: -10%;
+  animation-delay: 0s;
+}
+
+.orb2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(78, 205, 196, 0.8) 0%, transparent 70%);
+  top: 20%;
+  right: -5%;
+  animation-delay: 3s;
+}
+
+.orb3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(255, 195, 113, 0.8) 0%, transparent 70%);
+  bottom: -10%;
+  left: 10%;
+  animation-delay: 6s;
+}
+
+.orb4 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(199, 146, 234, 0.8) 0%, transparent 70%);
+  bottom: 10%;
+  right: 20%;
+  animation-delay: 9s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* ===== MAIN CONTAINER ===== */
+.main {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  text-align: center;
+  color: white;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.badgeIcon {
+  font-size: 1rem;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.gradient {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroDescription {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.heroStats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.statIcon {
+  font-size: 1.25rem;
+}
+
+/* ===== CARD SECTION ===== */
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  overflow: hidden;
+}
+
+.cardGlow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.uploadSection {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* ===== DROPZONE ===== */
+.dropzone {
+  position: relative;
+  display: block;
+  padding: 3rem 2rem;
+  border: 3px dashed #667eea;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropzone:hover {
+  border-color: #764ba2;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+}
+
+.dropzoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.uploadIcon {
+  color: #667eea;
+  transition: transform 0.3s ease;
+}
+
+.dropzone:hover .uploadIcon {
+  transform: translateY(-5px);
+}
+
+.dropzoneText {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dropzoneText strong {
+  font-size: 1.125rem;
+  color: #1a202c;
+  font-weight: 600;
+}
+
+.dropzoneText span {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ===== FILE INFO ===== */
+.fileInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+  border-radius: 15px;
+  border: 1px solid #e2e8f0;
+  animation: slideIn 0.3s ease-out;
+}
+
+.fileIcon {
+  font-size: 2rem;
+}
+
+.fileDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.fileDetails strong {
+  font-size: 1rem;
+  color: #1a202c;
+  font-weight: 600;
+}
+
+.fileDetails span {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+/* ===== BUTTONS ===== */
+.convertButton {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
   position: relative;
   overflow: hidden;
 }
 
-.backdrop {
+.convertButton::before {
+  content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.9), transparent 55%),
-    radial-gradient(circle at 80% 0%, rgba(165, 180, 255, 0.8), transparent 45%),
-    radial-gradient(circle at 90% 40%, rgba(125, 211, 252, 0.5), transparent 50%),
-    radial-gradient(circle at 20% 90%, rgba(250, 204, 255, 0.5), transparent 50%);
-  filter: blur(12px);
-  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
-.main {
-  width: 100%;
-  max-width: 1100px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+.convertButton:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.convertButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+}
+
+.convertButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.convertButton:disabled:hover {
+  transform: none;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.buttonText {
   position: relative;
   z-index: 1;
 }
 
-.hero {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 640px;
-}
-
-.heroBadge {
-  width: fit-content;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #3b4bff;
-}
-
-.hero h1 {
-  font-size: 40px;
+.downloadButton {
+  display: block;
+  width: 100%;
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  font-size: 1.125rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s ease-out;
 }
 
-.hero p {
-  font-size: 17px;
-  line-height: 1.6;
-  color: rgba(11, 14, 20, 0.7);
+.downloadButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(17, 153, 142, 0.5);
 }
 
-.heroHighlights {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.highlight {
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  font-size: 13px;
-  color: rgba(11, 14, 20, 0.75);
-}
-
-.glassPanel {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 32px;
-  padding: 32px;
+/* ===== PROGRESS ===== */
+.progress {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  box-shadow: 0 32px 80px rgba(15, 23, 42, 0.2);
-  backdrop-filter: blur(30px);
+  gap: 0.75rem;
+  animation: slideIn 0.3s ease-out;
 }
 
-.panelHeader {
+.progressInfo {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
-.panelHeader h2 {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-.panelHeader p {
-  color: rgba(11, 14, 20, 0.65);
-}
-
-.panelMeta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  font-size: 13px;
-  color: rgba(11, 14, 20, 0.6);
-}
-
-.uploadRow {
-  display: grid;
-  grid-template-columns: minmax(240px, 1.1fr) minmax(280px, 1fr);
-  gap: 20px;
-}
-
-.fileLabel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  font-weight: 600;
-  color: #0b0e14;
-  padding: 18px;
-  border-radius: 20px;
-  border: 1px dashed rgba(86, 110, 255, 0.45);
-  background: rgba(255, 255, 255, 0.65);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.fileTitle {
-  font-size: 15px;
-}
-
-.fileHint {
-  font-size: 12px;
-  color: rgba(11, 14, 20, 0.6);
+.progressStatus {
+  font-size: 0.875rem;
+  color: #4a5568;
   font-weight: 500;
 }
 
-.fileInput {
-  padding: 14px;
-  background: rgba(248, 250, 255, 0.9);
-  border: 1px solid rgba(76, 104, 255, 0.15);
-  border-radius: 14px;
-  color: #0b0e14;
-  cursor: pointer;
-}
-
-.fileLabel:hover {
-  border-color: rgba(86, 110, 255, 0.8);
-  box-shadow: 0 12px 30px rgba(78, 104, 255, 0.18);
-}
-
-.fileSummary {
-  display: grid;
-  gap: 12px;
-  padding: 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  font-size: 13px;
-  color: rgba(11, 14, 20, 0.7);
-}
-
-.fileSummary strong {
-  display: block;
-  font-size: 14px;
-  color: #0b0e14;
-}
-
-.primaryButton {
-  border: none;
-  padding: 16px 20px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #4b6bff 0%, #7f5bff 50%, #ff7ad9 100%);
-  color: white;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-  box-shadow: 0 20px 50px rgba(88, 101, 255, 0.35);
-}
-
-.primaryButton:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  box-shadow: none;
-}
-
-.primaryButton:not(:disabled):hover {
-  transform: translateY(-1px);
-}
-
-.progressWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.progressHeader {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: rgba(11, 14, 20, 0.7);
+.progressPercent {
+  font-size: 1rem;
+  color: #667eea;
+  font-weight: 700;
 }
 
 .progressBar {
   width: 100%;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.12);
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 10px;
   overflow: hidden;
+  position: relative;
 }
 
 .progressFill {
   height: 100%;
-  background: linear-gradient(90deg, #4b6bff, #2fd7ff);
-  transition: width 0.2s ease;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.download {
-  padding: 14px 18px;
-  border-radius: 18px;
-  background: rgba(13, 17, 29, 0.92);
-  color: #f8f9ff;
+.progressFill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ===== ERROR MESSAGE ===== */
+.errorMessage {
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  border-radius: 10px;
   font-weight: 600;
-  text-align: center;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  animation: slideIn 0.3s ease-out;
 }
 
-.error {
-  color: #d74d55;
-  font-weight: 600;
-}
-
-.steps {
+/* ===== FEATURES ===== */
+.features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
-.stepCard {
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 24px;
-  padding: 20px;
+.feature {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.featureNumber {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.feature h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.feature p {
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
-  backdrop-filter: blur(20px);
+  gap: 0.5rem;
+  animation: fadeInUp 0.8s ease-out 0.6s backwards;
 }
 
-.stepCard span {
-  font-size: 12px;
-  color: rgba(11, 14, 20, 0.6);
-  letter-spacing: 0.12em;
+.copyright {
+  font-weight: 600;
+  opacity: 0.8;
 }
 
-.stepCard h3 {
-  font-size: 18px;
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.stepCard p {
-  font-size: 13px;
-  color: rgba(11, 14, 20, 0.7);
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.footer {
-  font-size: 13px;
-  color: rgba(11, 14, 20, 0.6);
-}
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+  }
 
-@media (max-width: 900px) {
-  .uploadRow {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroDescription {
+    font-size: 1rem;
+  }
+
+  .heroStats {
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  .dropzone {
+    padding: 2rem 1rem;
+  }
+
+  .features {
     grid-template-columns: 1fr;
   }
-
-  .panelMeta {
-    align-items: flex-start;
-  }
 }
 
-@media (max-width: 640px) {
-  .page {
-    padding: 32px 16px 72px;
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2rem;
   }
 
-  .hero h1 {
-    font-size: 30px;
+  .stat {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
   }
 
-  .glassPanel {
-    padding: 24px;
+  .card {
+    padding: 1.5rem 1rem;
   }
 }
