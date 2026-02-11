@@ -1,5 +1,7 @@
 :root {
   color-scheme: light;
+  --font-body: var(--font-sora);
+  --font-display: var(--font-fraunces);
 }
 
 * {
@@ -15,10 +17,9 @@ body {
 }
 
 body {
-  background: #f3f6ff;
-  color: #0b0d14;
-  font-family: "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", system-ui,
-    sans-serif;
+  background: #f6f1e7;
+  color: #17130f;
+  font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

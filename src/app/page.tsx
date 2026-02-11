@@ -272,28 +272,28 @@ export default function Home() {
       <main className={styles.main}>
         <header className={styles.hero}>
           <div className={styles.heroBadge}>
-            <span className={styles.badgeIcon}>✨</span>
-            DarkPDF
+            <span className={styles.badgeIcon}>●</span>
+            DarkPDF Studio
           </div>
           <h1 className={styles.heroTitle}>
             Transforme tes PDFs en
             <span className={styles.gradient}> mode sombre</span>
           </h1>
           <p className={styles.heroDescription}>
-            Conversion ultra-rapide et locale. Tes documents restent privés avec un rendu professionnel en haute qualité.
+            Conversion locale, propre et rapide. Tes documents restent privés avec un rendu lisible et léger.
           </p>
           <div className={styles.heroStats}>
             <div className={styles.stat}>
-              <div className={styles.statIcon}>🔒</div>
-              <span>100% Local</span>
-            </div>
-            <div className={styles.stat}>
               <div className={styles.statIcon}>⚡</div>
-              <span>Ultra Rapide</span>
+              <span>Traitement local</span>
             </div>
             <div className={styles.stat}>
-              <div className={styles.statIcon}>🎨</div>
-              <span>DPI adaptatif</span>
+              <div className={styles.statIcon}>🧠</div>
+              <span>Compression adaptative</span>
+            </div>
+            <div className={styles.stat}>
+              <div className={styles.statIcon}>🎯</div>
+              <span>Rendu net</span>
             </div>
           </div>
         </header>
@@ -383,7 +383,7 @@ export default function Home() {
           <div className={styles.feature}>
             <div className={styles.featureNumber}>02</div>
             <h3>Inversion parfaite</h3>
-            <p>Chaque pixel est inversé avec précision pour un rendu sombre impeccable.</p>
+            <p>Chaque pixel est inversé avec précision pour un rendu sombre propre.</p>
           </div>
           <div className={styles.feature}>
             <div className={styles.featureNumber}>03</div>
