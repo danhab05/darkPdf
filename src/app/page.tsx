@@ -15,17 +15,21 @@ type PageResult = {
   height: number;
 };
 
-const MAX_HIGH_QUALITY_MB = 30;
-const HIGH_DPI = 900;
-const MEDIUM_DPI = 600;
+const MAX_HIGH_QUALITY_MB = 12;
+const HIGH_DPI = 300;
+const MEDIUM_DPI = 220;
+const LOW_DPI = 170;
+const MAX_RENDER_PX = 2400;
 const MAX_PARALLEL = 6;
 
 const toMegabytes = (bytes: number) => bytes / (1024 * 1024);
 
 const selectDpi = (fileSize: number, pageCount: number) => {
-  if (fileSize > MAX_HIGH_QUALITY_MB * 1024 * 1024 || pageCount > 60) {
-    return MEDIUM_DPI;
-  }
+  const sizeMb = toMegabytes(fileSize);
+  const isLarge = sizeMb > 18 || pageCount > 50;
+  const isMedium = sizeMb > 8 || pageCount > 25;
+  if (isLarge) return LOW_DPI;
+  if (isMedium) return MEDIUM_DPI;
   return HIGH_DPI;
 };
 
@@ -44,15 +48,15 @@ const selectParallelism = (fileSize: number, pageCount: number, dpi: number) => 
 
 const selectJpegQuality = (fileSize: number, pageCount: number, dpi: number) => {
   const sizeMb = toMegabytes(fileSize);
-  const isLarge = sizeMb > 45 || pageCount > 80;
-  const isMedium = sizeMb > 25 || pageCount > 40;
+  const isLarge = sizeMb > 18 || pageCount > 50;
+  const isMedium = sizeMb > 8 || pageCount > 25;
   const isHighDpi = dpi >= HIGH_DPI;
 
-  if (isLarge && isHighDpi) return 0.55;
-  if (isLarge) return 0.6;
-  if (isMedium && isHighDpi) return 0.65;
-  if (isMedium) return 0.7;
-  return 0.75;
+  if (isLarge && isHighDpi) return 0.5;
+  if (isLarge) return 0.52;
+  if (isMedium && isHighDpi) return 0.58;
+  if (isMedium) return 0.62;
+  return 0.68;
 };
 
 const clampParallelism = (value: number) =>
@@ -125,8 +129,10 @@ export default function Home() {
 
       const renderPage = async (pageIndex: number): Promise<PageResult> => {
         const page = await sourcePdf.getPage(pageIndex);
-        const viewport = page.getViewport({ scale });
         const baseViewport = page.getViewport({ scale: 1 });
+        const maxPageDim = Math.max(baseViewport.width, baseViewport.height);
+        const cappedScale = Math.min(scale, MAX_RENDER_PX / maxPageDim);
+        const viewport = page.getViewport({ scale: cappedScale });
 
         const canvas = document.createElement("canvas");
         canvas.width = Math.ceil(viewport.width);
@@ -136,6 +142,8 @@ export default function Home() {
         if (!context) {
           throw new Error("Impossible d'initialiser le canvas.");
         }
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = "high";
 
         await page.render({ canvasContext: context, viewport, canvas }).promise;
 
@@ -285,7 +293,7 @@ export default function Home() {
             </div>
             <div className={styles.stat}>
               <div className={styles.statIcon}>🎨</div>
-              <span>900 DPI</span>
+              <span>DPI adaptatif</span>
             </div>
           </div>
         </header>
@@ -380,7 +388,7 @@ export default function Home() {
           <div className={styles.feature}>
             <div className={styles.featureNumber}>03</div>
             <h3>Compression optimale</h3>
-            <p>Réduction de taille jusqu'à 50% tout en préservant la qualité visuelle.</p>
+            <p>Réduction de taille maîtrisée pour garder un rendu net sans exploser le poids.</p>
           </div>
         </section>
 
